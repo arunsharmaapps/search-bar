@@ -7,7 +7,7 @@ export default function Tabs({ activeTab, setActiveTab, results }) {
         role="tab"
         aria-selected={activeTab === "all"}
       >
-        All ({results.length})
+        All ({results?.length})
       </button>
       <button
         className={activeTab === "file" ? "active" : ""}
@@ -15,7 +15,7 @@ export default function Tabs({ activeTab, setActiveTab, results }) {
         role="tab"
         aria-selected={activeTab === "file"}
       >
-        Files ({results.filter((r) => r.type === "file").length})
+        Files ({results.filter((r) => r.type === "file")?.length})
       </button>
       <button
         className={activeTab === "person" ? "active" : ""}
@@ -23,7 +23,7 @@ export default function Tabs({ activeTab, setActiveTab, results }) {
         role="tab"
         aria-selected={activeTab === "person"}
       >
-        People ({results.filter((r) => r.type === "person").length})
+        People ({results.filter((r) => r.type === "person")?.length})
       </button>
     </div>
   );

@@ -1,13 +1,13 @@
 export default function SearchResults({ results }) {
   return (
     <div
-      className={`dropdown-wrapper ${results.length ? "open" : ""}`}
+      className={`dropdown-wrapper ${results?.length ? "open" : ""}`}
       role="listbox"
       aria-label="Search results"
     >
       <div className="dropdown">
         <ul>
-          {results.length ? (
+          {results?.length ? (
             results.map((item) => (
               <li key={item.id} role="option">
                 {item.type === "person" ? (

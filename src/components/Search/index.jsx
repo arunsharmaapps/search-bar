@@ -85,7 +85,7 @@ export default function Search() {
         aria-label="Search items"
       >
         <SearchInput search={search} setSearch={setSearch} loading={loading} />
-        {filteredResults.length > 0 && (
+        {filteredResults?.length > 0 && (
           <>
             <Tabs
               activeTab={activeTab}
