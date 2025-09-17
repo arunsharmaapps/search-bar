@@ -77,15 +77,24 @@ export default function App() {
 
   return (
     <div className="search-container">
-      <div className="search-container__box">
-        <div>
+      <div
+        className="search-container__box"
+        role="search"
+        aria-label="Search items"
+      >
+        <div className="search-input-wrapper">
           {loading ? (
             <AiOutlineLoading3Quarters
               className="search-container__icon search-container__icon--spin"
               size={20}
+              aria-hidden="true"
             />
           ) : (
-            <FaSearch className="search-container__icon" size={20} />
+            <FaSearch
+              className="search-container__icon"
+              size={20}
+              aria-hidden="true"
+            />
           )}
           <input
             className={
@@ -96,70 +105,92 @@ export default function App() {
             placeholder="Search Something..."
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
+            aria-label="Search input"
           />
           <button
             className="search-container__button"
             onClick={() => setSearch("")}
+            aria-label="Clear search"
           >
             Clear
           </button>
         </div>
 
         {search && !loading && (
-          <div className={`dropdown-wrapper ${results.length ? "open" : ""}`}>
+          <div
+            className={`dropdown-wrapper ${results.length ? "open" : ""}`}
+            role="listbox"
+            aria-label="Search results"
+          >
             <div className="dropdown">
-              <div className="tabs">
+              <div className="tabs" role="tablist">
                 <button
                   className={activeTab === "all" ? "active" : ""}
                   onClick={() => setActiveTab("all")}
+                  role="tab"
+                  aria-selected={activeTab === "all"}
                 >
                   All ({results.length})
                 </button>
                 <button
                   className={activeTab === "file" ? "active" : ""}
                   onClick={() => setActiveTab("file")}
+                  role="tab"
+                  aria-selected={activeTab === "file"}
                 >
                   Files ({results.filter((r) => r.type === "file").length})
                 </button>
                 <button
                   className={activeTab === "person" ? "active" : ""}
                   onClick={() => setActiveTab("person")}
+                  role="tab"
+                  aria-selected={activeTab === "person"}
                 >
                   People ({results.filter((r) => r.type === "person").length})
                 </button>
               </div>
               <ul>
-                {filteredResults.map((item) => (
-                  <li key={item.id}>
-                    {item.type === "person" ? (
-                      <div className="person__info">
-                        <img
-                          src={item.avatar}
-                          alt={item.name}
-                          width="30"
-                          style={{ borderRadius: "50%" }}
-                        />
-                        <div className="person__details">
-                          <span>{item.name}</span>
-                          <span className="person__status">{item.status}</span>
+                {filteredResults.length ? (
+                  filteredResults.map((item) => (
+                    <li key={item.id} role="option">
+                      {item.type === "person" ? (
+                        <div className="person__info">
+                          <img
+                            src={item.avatar}
+                            alt={item.name}
+                            width="30"
+                            style={{ borderRadius: "50%" }}
+                          />
+                          <div className="person__details">
+                            <span>{item.name}</span>
+                            <span className="person__status">
+                              {item.status}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      <div className="person__info">
-                        <img
-                          src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
-                          alt="file"
-                          width="30"
-                          style={{ borderRadius: "4px" }}
-                        />
-                        <div className="person__details">
-                          <span>{item.name}</span>
-                          <span className="person__status">{item.details}</span>
+                      ) : (
+                        <div className="person__info">
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
+                            alt="file"
+                            width="30"
+                            style={{ borderRadius: "4px" }}
+                          />
+                          <div className="person__details">
+                            <span>{item.name}</span>
+                            <span className="person__status">
+                              {item.details}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </li>
+                  ))
+                ) : (
+                  <li role="option" className="no-results">
+                    No results found
                   </li>
-                ))}
+                )}
               </ul>
             </div>
           </div>
